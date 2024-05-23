@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { tryCatch } from "./features";
+import { tryCatch } from "./features.js";
 
 const dbConnect = () => tryCatch(
     mongoose

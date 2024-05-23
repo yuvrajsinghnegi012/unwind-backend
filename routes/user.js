@@ -1,9 +1,10 @@
 import express from 'express';
-import { testApi } from "../controllers/user.js";
+import { newUser, testApi } from "../controllers/user.js";
 
 const router = express.Router();
 
 router.get("/test", testApi);
+router.post("/new", newUser);
 
 export default router;
 

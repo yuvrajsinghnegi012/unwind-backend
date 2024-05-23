@@ -3,11 +3,22 @@ import { config } from "dotenv";
 import dbConnect from "./utils/dbConnect.js";
 import userRoutes from "./routes/user.js";
 import { errorMiddleware } from "./middlewares/error.js";
+import fileUpload from "express-fileupload";
+import { cloudinaryConnect } from "./config/cloudinary.js";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 config();
 dbConnect();
+cloudinaryConnect();
+
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); /// To accept images sent as multipart form
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
 
 // Routes
 app.use("/api/v1/user", userRoutes);
