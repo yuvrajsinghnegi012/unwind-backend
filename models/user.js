@@ -38,9 +38,11 @@ const schema = new mongoose.Schema(
         reservationList: {
             type: Array,
             default: [],
-        }
+        },
     },
-    { timestamps: true }
+    {
+        timestamps: true
+    }
 )
 
 export const User = new mongoose.model("User", schema);

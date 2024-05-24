@@ -23,19 +23,19 @@ const schema = new mongoose.Schema(
             default: [],
         },
         guests: {
-            type: String,
+            type: Number,
             required: [true, "Please enter guests number"],
         },
         bedrooms: {
-            type: String,
+            type: Number,
             required: [true, "Please enter bedrooms number"],
         },
         beds: {
-            type: String,
+            type: Number,
             required: [true, "Please enter beds number"],
         },
         baths: {
-            type: String,
+            type: Number,
             required: [true, "Please enter baths number"],
         },
         desc: {
@@ -64,4 +64,4 @@ const schema = new mongoose.Schema(
     }
 )
 
-export const User = new mongoose.model("User", schema);
+export const Property = new mongoose.model("Property", schema);

@@ -1,11 +1,12 @@
-import express from "express";
+import cookieParser from "cookie-parser";
 import { config } from "dotenv";
-import dbConnect from "./utils/dbConnect.js";
-import userRoutes from "./routes/user.js";
-import { errorMiddleware } from "./middlewares/error.js";
+import express from "express";
 import fileUpload from "express-fileupload";
 import { cloudinaryConnect } from "./config/cloudinary.js";
-import cookieParser from "cookie-parser";
+import { errorMiddleware } from "./middlewares/error.js";
+import propertyRoutes from "./routes/property.js";
+import userRoutes from "./routes/user.js";
+import dbConnect from "./utils/dbConnect.js";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -24,6 +25,7 @@ app.use(fileUpload({
 
 // Routes
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/property", propertyRoutes);
 app.get("/", (req, res)=>{
     res.json(`App is listening on api/v1/`);
     return;
