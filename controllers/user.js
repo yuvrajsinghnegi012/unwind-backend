@@ -1,8 +1,9 @@
 import { User } from "../models/user.js";
 import bcryptjs from "bcryptjs";
-import { tryCatch } from "../utils/features.js";
+import { cookieGenerator, tokenGenerator, tryCatch } from "../utils/features.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import { imageUpload } from "../config/cloudinary.js";
+import jwt from "jsonwebtoken";
 
 // NEW USER
 export const newUser = tryCatch(async (req, res, next) => {
@@ -40,6 +41,65 @@ export const newUser = tryCatch(async (req, res, next) => {
     })
 });
 
+// LOGIN
+export const login = tryCatch(async (req, res, next) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return next(new ErrorHandler("Please fill all details", 401));
+    }
+
+    const validUser = await User.findOne({ email });
+    if (!validUser) {
+        return next(new ErrorHandler("User not found", 401));
+    }
+
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    if(!validPassword){
+        return next(new ErrorHandler("Either email or password is wrong", 401));
+    }
+
+    const token = tokenGenerator(validUser);
+    const cookie1 = cookieGenerator(token);
+    cookie1(res);
+    
+    const {password: notToSend, ...user } = validUser;
+
+    return res.status(200).json({
+        success: true,
+        message: `Welcome ${validUser.name.split(" ")[0]}`,
+        validUser,
+        user,
+    })
+});
+
+// LOGOUT
+export const logout = tryCatch((req, res, next)=>{
+    return res.clearCookie("access_token").status(200).json({
+        success: true,
+        message: "Logout successful",
+    });
+});
+
+// GET SINGLE USER
+export const getSingleUser = tryCatch(async(req, res, next)=>{
+    const { id } = req.params;
+    const user = await User.findById(id);
+    return res.status(200).json({
+        success: true,
+        message: "User fetched successfully",
+        user,
+    })
+});
+
+// GET ALL USERS
+export const getAllUsers = tryCatch(async(req, res, next)=>{
+    const users = await User.find({});
+    return res.status(200).json({
+        success: true,
+        message: "Successfully retrieved all users",
+        users,
+    })
+});
 
 // TEST API
 export const testApi = (req, res) => {
