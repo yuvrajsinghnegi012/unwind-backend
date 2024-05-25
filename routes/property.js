@@ -4,7 +4,7 @@ import { getAllProperties, getSingleProperty, newProperty } from "../controllers
 const router = express.Router();
 
 router.post("/new/:id", newProperty);
-router.get("/:id", getSingleProperty);
 router.get("/", getAllProperties);
+router.get("/:id", getSingleProperty);
 
 export default router;

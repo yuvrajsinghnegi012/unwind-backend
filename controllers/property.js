@@ -38,7 +38,7 @@ export const newProperty = tryCatch(async (req, res, next) => {
 
   // Registering the property
   const property = await Property.create({
-    name, price, location, guests, bedrooms, beds, baths, desc, highlight, highlightDesc, facilities
+    name, price, location, host: id, guests, bedrooms, beds, baths, desc, highlight, highlightDesc, facilities, images
   });
   
   // Updating PropertyList in User
@@ -56,7 +56,7 @@ export const newProperty = tryCatch(async (req, res, next) => {
 // GET SINGLE USER
 export const getSingleProperty = tryCatch(async(req, res, next)=>{
   const { id } = req.params;
-  const property = await Property.findById(id);
+  const property = await Property.findById(id).populate("host");
   return res.status(200).json({
       success: true,
       message: "User fetched successfully",

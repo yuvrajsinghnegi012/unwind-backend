@@ -24,19 +24,39 @@ const schema = new mongoose.Schema(
             default: "https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg",
         },
         tripList: {
-            type: Array,
+            type: [
+                {
+                    type: mongoose.Types.ObjectId,
+                    ref: "Property",
+                }
+            ],
             default: [],
         },
         wishList: {
-            type: Array,
+            type: [
+                {
+                    type: mongoose.Types.ObjectId,
+                    ref: "Property",
+                }
+            ],
             default: [],
         },
         propertyList: {
-            type: Array,
+            type: [
+                {
+                    type: mongoose.Types.ObjectId,
+                    ref: "Property",
+                }
+            ],
             default: [],
         },
         reservationList: {
-            type: Array,
+            type: [
+                {
+                    type: mongoose.Types.ObjectId,
+                    ref: "Property",
+                }
+            ],
             default: [],
         },
     },

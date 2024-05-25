@@ -38,6 +38,10 @@ const schema = new mongoose.Schema(
             type: Number,
             required: [true, "Please enter baths number"],
         },
+        host: {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+        },
         desc: {
             type: String,
             required: [true, "Please enter a property description"],

@@ -92,7 +92,7 @@ export const getSingleUser = tryCatch(async(req, res, next)=>{
 });
 
 // GET ALL USERS
-export const getAllUsers = tryCatch(async(req, res, next)=>{
+export const getAllUsers = tryCatch(async (req, res, next)=>{
     const users = await User.find({});
     return res.status(200).json({
         success: true,
@@ -101,7 +101,41 @@ export const getAllUsers = tryCatch(async(req, res, next)=>{
     })
 });
 
-// TEST API
-export const testApi = (req, res) => {
-    res.json("Api testing is successful");
-}
+// TOGGLE PROPERTY IN WISHLIST
+export const toggleWishlist = tryCatch(async (req, res, next)=>{
+    const { userId } = req.params;
+    const { propertyId } = req.params;
+
+    const user = await User.findById(userId);
+    if(!user) return next(new ErrorHandler("Invalid User ID", 403));
+
+    const propertyIndex = user.wishList.indexOf(propertyId);
+
+    if(propertyIndex === -1){
+        //Add to wishlist
+        user.wishList.push(propertyId);
+    }
+    else{
+        // Remove from wishlist
+        user.wishList.splice(propertyIndex, 1);
+    }
+    // Saving into the DB
+    const updatedUser = await user.save();
+    return res.status(200).json({
+        success: true,
+        message: "Property toggled into wishlist",
+        updatedUser,
+    })
+
+})
+
+// Get Wishlist
+export const getWishlist = tryCatch(async (req, res, next)=>{
+    const { id } = req.params;
+    const user = await User.findById(id).populate("wishList");
+    return res.status(200).json({
+        success: true,
+        message: "User fetched successfully",
+        wishlist: user.wishList,
+    })
+});
