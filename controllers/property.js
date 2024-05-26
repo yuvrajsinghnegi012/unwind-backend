@@ -59,7 +59,7 @@ export const getSingleProperty = tryCatch(async(req, res, next)=>{
   const property = await Property.findById(id).populate("host");
   return res.status(200).json({
       success: true,
-      message: "User fetched successfully",
+      message: "Property fetched successfully",
       property,
   })
 });
@@ -69,7 +69,7 @@ export const getAllProperties = tryCatch(async(req, res, next)=>{
   const properties = await Property.find({});
   return res.status(200).json({
       success: true,
-      message: "Successfully retrieved all users",
+      message: "Successfully retrieved all properties",
       properties,
   })
 });

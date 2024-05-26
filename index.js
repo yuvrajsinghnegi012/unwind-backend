@@ -4,6 +4,7 @@ import express from "express";
 import fileUpload from "express-fileupload";
 import { cloudinaryConnect } from "./config/cloudinary.js";
 import { errorMiddleware } from "./middlewares/error.js";
+import bookingRoutes from "./routes/booking.js";
 import propertyRoutes from "./routes/property.js";
 import userRoutes from "./routes/user.js";
 import dbConnect from "./utils/dbConnect.js";
@@ -26,6 +27,7 @@ app.use(fileUpload({
 // Routes
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/property", propertyRoutes);
+app.use("/api/v1/booking", bookingRoutes);
 app.get("/", (req, res)=>{
     res.json(`App is listening on api/v1/`);
     return;

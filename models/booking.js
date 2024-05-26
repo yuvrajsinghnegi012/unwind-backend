@@ -15,11 +15,11 @@ const schema = new mongoose.Schema(
             ref: "Property",
         },
         startDate: {
-            type: String,
+            type: Date,
             required: true,
         },
         endDate: {
-            type: String,
+            type: Date,
             required: true,
         },
         total: {
