@@ -26,7 +26,7 @@ const schema = new mongoose.Schema(
         tripList: {
             type: [
                 {
-                    type: mongoose.Types.ObjectId,
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: "Property",
                 }
             ],
@@ -35,7 +35,7 @@ const schema = new mongoose.Schema(
         wishList: {
             type: [
                 {
-                    type: mongoose.Types.ObjectId,
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: "Property",
                 }
             ],
@@ -44,7 +44,7 @@ const schema = new mongoose.Schema(
         propertyList: {
             type: [
                 {
-                    type: mongoose.Types.ObjectId,
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: "Property",
                 }
             ],
@@ -53,7 +53,7 @@ const schema = new mongoose.Schema(
         reservationList: {
             type: [
                 {
-                    type: mongoose.Types.ObjectId,
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: "Property",
                 }
             ],
