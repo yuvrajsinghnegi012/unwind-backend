@@ -84,6 +84,9 @@ export const logout = tryCatch((req, res, next)=>{
 export const getSingleUser = tryCatch(async(req, res, next)=>{
     const { id } = req.params;
     const user = await User.findById(id);
+    if(!user){
+        return next(new ErrorHandler("User not found", 401));
+    }
     return res.status(200).json({
         success: true,
         message: "User fetched successfully",

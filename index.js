@@ -8,6 +8,7 @@ import bookingRoutes from "./routes/booking.js";
 import propertyRoutes from "./routes/property.js";
 import userRoutes from "./routes/user.js";
 import dbConnect from "./utils/dbConnect.js";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -23,6 +24,7 @@ app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp/'
 }));
+app.use(cors());
 
 // Routes
 app.use("/api/v1/user", userRoutes);
