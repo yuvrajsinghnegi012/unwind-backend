@@ -3,7 +3,6 @@ import bcryptjs from "bcryptjs";
 import { cookieGenerator, tokenGenerator, tryCatch } from "../utils/features.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import { imageUpload } from "../config/cloudinary.js";
-import jwt from "jsonwebtoken";
 
 // NEW USER
 export const newUser = tryCatch(async (req, res, next) => {
@@ -13,24 +12,28 @@ export const newUser = tryCatch(async (req, res, next) => {
     if (!name || !email || !password || !confirmPassword) {
         return next(new ErrorHandler("Please fill all dtails", 401));
     }
-
+    
     if (password != confirmPassword) {
         return next(new ErrorHandler("Passwords do not match", 401));
     }
-
+    
     if (await User.findOne({ email })) {
         return next(new ErrorHandler("Email already in use", 401));
     }
 
-    // Uploading Image To Cloudinary
-    const response = await imageUpload(profilePicture, "unwind", 8, next);
-
-    // const token = jwt.sign({ data: password }, process.env.JWT_SECRET_KEY, { algorithm: 'HS256' });
+    const details = {};
+    details.name = name;
+    details.email = email;
+    if(profilePicture){   
+        // Uploading Image To Cloudinary
+        const response = await imageUpload(profilePicture, "unwind", 8, next);
+        details.profilePicture = response.secure_url
+    }
+    
     const hashPassword = bcryptjs.hashSync(password, 10);
+    details.password = hashPassword;
 
-    const userRegistered = await User.create({
-        name, email, password: hashPassword, profilePicture: response.secure_url,
-    });
+    const userRegistered = await User.create(details);
 
     const { password: doNotSend, ...user } = userRegistered._doc;
 
