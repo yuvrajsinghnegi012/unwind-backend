@@ -65,7 +65,7 @@ export const login = tryCatch(async (req, res, next) => {
     const cookie1 = cookieGenerator(token);
     cookie1(res);
     
-    const {password: notToSend, ...user } = validUser;
+    const {password: notToSend, ...user } = validUser._doc;
 
     return res.status(200).json({
         success: true,
