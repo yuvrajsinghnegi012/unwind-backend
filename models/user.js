@@ -27,7 +27,7 @@ const schema = new mongoose.Schema(
             type: [
                 {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: "Property",
+                    ref: "Booking",
                 }
             ],
             default: [],

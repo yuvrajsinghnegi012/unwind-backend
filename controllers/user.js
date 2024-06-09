@@ -145,3 +145,24 @@ export const getWishlist = tryCatch(async (req, res, next)=>{
         wishlist: user.wishList,
     })
 });
+
+// Get Properties
+export const getProperties = tryCatch(async (req, res, next)=>{
+    const { id } = req.params;
+    const user = await User.findById(id).populate("propertyList");
+    return res.status(200).json({
+        success: true,
+        message: "Properties fetched successfully",
+        properties: user.propertyList,
+    })
+});
+// Get Triplist
+export const getTriplist = tryCatch(async (req, res, next)=>{
+    const { id } = req.params;
+    const user = await User.findById(id).populate("tripList");
+    return res.status(200).json({
+        success: true,
+        message: "Triplist fetched successfully",
+        triplist: user.tripList,
+    })
+});
