@@ -159,7 +159,15 @@ export const getProperties = tryCatch(async (req, res, next)=>{
 // Get Triplist
 export const getTriplist = tryCatch(async (req, res, next)=>{
     const { id } = req.params;
-    const user = await User.findById(id).populate("tripList");
+    // const user = await User.findById(id).populate("tripList");
+    const user = await User.findById(id).populate({
+        path: "tripList",
+        populate: [
+            { path: "customer" },
+            { path: "host" },
+            { path: "listing" },
+        ]
+    });
     return res.status(200).json({
         success: true,
         message: "Triplist fetched successfully",
