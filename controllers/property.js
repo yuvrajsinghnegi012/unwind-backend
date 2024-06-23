@@ -7,10 +7,10 @@ import { imageUpload } from "../config/cloudinary.js";
 // New Property
 export const newProperty = tryCatch(async (req, res, next) => {
   const { id } = req.params;
-  const { name, price, location, guests, bedrooms, beds, baths, desc, highlight, highlightDesc, facilities } = req.body;
+  const { name, price, location, guests, bedrooms, beds, baths, desc, highlight, highlightDesc, facilities, category } = req.body;
   const { images: propertyImages } = req.files;
   
-  if (!name || !price || !location || !desc || !highlight || !highlightDesc) {
+  if (!name || !price || !location || !desc || !highlight || !highlightDesc || !category) {
     return next(new ErrorHandler("Please fill all fields", 401));
   }
   if (!propertyImages) {
@@ -38,7 +38,7 @@ export const newProperty = tryCatch(async (req, res, next) => {
 
   // Registering the property
   const property = await Property.create({
-    name, price, location, host: id, guests, bedrooms, beds, baths, desc, highlight, highlightDesc, facilities, images
+    name, price, location, host: id, guests, bedrooms, beds, baths, desc, highlight, highlightDesc, facilities, category, images
   });
   
   // Updating PropertyList in User
@@ -70,6 +70,18 @@ export const getAllProperties = tryCatch(async(req, res, next)=>{
   return res.status(200).json({
       success: true,
       message: "Successfully retrieved all properties",
+      properties,
+  })
+});
+
+// Get Category Properties
+export const getCategoryProperties = tryCatch(async(req, res, next)=>{
+  const { category } = req.params;
+  const properties = await Property.find({category});
+
+  return res.status(200).json({
+      success: true,
+      message: "Successfully retrieved category properties",
       properties,
   })
 });

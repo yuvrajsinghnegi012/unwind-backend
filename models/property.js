@@ -10,6 +10,10 @@ const schema = new mongoose.Schema(
             type: Number,
             required: [true, "Please enter property price"],
         },
+        category: {
+            type: String,
+            required: [true, "Please enter property category"],
+        },
         location: {
             type: String,
             required: [true, "Please enter property location"],
