@@ -141,7 +141,7 @@ export const getWishlist = tryCatch(async (req, res, next)=>{
     const user = await User.findById(id).populate("wishList");
     return res.status(200).json({
         success: true,
-        message: "User fetched successfully",
+        message: "Wishlist fetched successfully",
         wishlist: user.wishList,
     })
 });

@@ -16,10 +16,10 @@ export const newBooking = tryCatch(async (req, res, next)=>{
         return next(new ErrorHandler("User Or Host does not exist",403));
     }
 
-    const { startDate, endDate } = date;
-
+    // const { startDate, endDate } = date;
+    const { from: dateFrom, to: dateTo } = date;
     const booking = await Booking.create({
-        customer: userId, host: hostId, listing: propertyId, startDate: Date(startDate), endDate: Date(endDate), total,
+        customer: userId, host: hostId, listing: propertyId, startDate: new Date(dateFrom), endDate: new Date(dateTo), total,
     });
 
     //Updating tripList of the user(customer)
