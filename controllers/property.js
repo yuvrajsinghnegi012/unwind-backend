@@ -96,6 +96,8 @@ export const searchProperties = tryCatch(async (req, res, next) => {
       // name = { $regex: search, $options: "i", },
       ...(search && [{ name: { $regex: search, $options: "i" } }]),
       { desc: { $regex: search, $options: "i", } },
+      { category: { $regex: search, $options: "i", } },
+      { location: { $regex: search, $options: "i", } },
       { highlight: { $regex: search, $options: "i", } },
       { highlightDesc: { $regex: search, $options: "i", } },
     ]
@@ -105,7 +107,7 @@ export const searchProperties = tryCatch(async (req, res, next) => {
       $gte: Number(minPrice || 0),
       $lte: Number(maxPrice || 1000000000),
     };
-  if (category) baseQuery.category = category;
+  if (category) baseQuery.category = { $regex: category, $options: "i" };
 
   const properties = await Property.find(baseQuery).sort(sort && { price: sort === "asc" ? 1 : -1 });
 
