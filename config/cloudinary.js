@@ -30,7 +30,7 @@ export const cloudinaryUploader = async (file, folder, quality, next) => {
 
 export const imageUpload = async (file, folder, quality, next) => {
     const extension = file.name.split(".").pop();
-    const supportedExtensions = ["png", "jpg", "jpeg"];
+    const supportedExtensions = ["png", "jpg", "jpeg", "webp"];
     if(!supportedExtensions.includes(extension)){
         return next(new ErrorHandler("File type not supported: ", 400));
     }
