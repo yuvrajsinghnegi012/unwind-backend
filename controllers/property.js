@@ -46,7 +46,7 @@ export const newProperty = tryCatch(async (req, res, next) => {
   const updatedUser = await user.save();
 
   return res.status(200).json({
-    success: false,
+    success: true,
     message: "Property added successfully",
     property,
     updatedUser,
